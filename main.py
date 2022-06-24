@@ -71,8 +71,11 @@ def main():
                 f"using weighted tf-idf w2vec: \n{perf_logistic_avg_tfidf[0][1]}")
     # sort based on the models best average recall
     model_perf = sorted(model_perf, key=lambda tup: tup[0], reverse=True)
+
     logger.info(f"best model based on the average class recall is : {model_perf[0][3]}, with : {model_perf[0][2]}")
     logger.info("main function is done.")
+
+    return model_perf[0]
 
 
 if __name__ == "__main__":
