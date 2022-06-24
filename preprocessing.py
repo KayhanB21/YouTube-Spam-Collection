@@ -51,7 +51,11 @@ class NLPPipeline:
             self.unicode_emoji.append((re.escape(emoj), emot_txt))
 
         # lemmatization
-        self.nlp = spacy.load(settings.preprocessing.lemmatization.spacy_model, disable=['parser', 'ner'])
+        try:
+            self.nlp = spacy.load(settings.preprocessing.lemmatization.spacy_model, disable=['parser', 'ner'])
+        except Exception as e:
+            spacy.cli.download(settings.preprocessing.lemmatization.spacy_model)
+            self.nlp = spacy.load(settings.preprocessing.lemmatization.spacy_model, disable=['parser', 'ner'])
 
         logger.info(f"loaded spacy pipes: {self.nlp.pipe_names}")
 
@@ -231,7 +235,6 @@ class NLPPipeline:
             res.append(" ".join(token.lemma_ for token in doc if (not token.is_stop) and token.has_vector))
         for inx, item in enumerate(tqdm(unique_desc)):
             self.df.loc[self.df[self.df['CONTENT_EDITED'] == item].index, 'CONTENT_EDITED'] = res[inx]
-
 
 
 def deduplication(df: pd.DataFrame) -> pd.DataFrame:

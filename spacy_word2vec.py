@@ -21,6 +21,12 @@ class SpacyWord2Vec:
         self._avg_vect = None
         self._df = df
 
+        try:
+            self.nlp = spacy.load(settings.modeling.spacy.model, disable=['parser', 'ner'])
+        except Exception as e:
+            spacy.cli.download(settings.modeling.spacy.model)
+            self.nlp = spacy.load(settings.modeling.spacy.model, disable=['parser', 'ner'])
+
     def calc_avg_vector(self):
         self._create_spacy_doc_list()
         self._get_avg_vector()
@@ -36,9 +42,8 @@ class SpacyWord2Vec:
                                                       name='avg w2c with tf_idf')
 
     def _create_spacy_doc_list(self):
-        nlp = spacy.load(settings.modeling.spacy.model, disable=['parser', 'ner'])
-        self.docs = list(nlp.pipe(self._df['CONTENT_EDITED'],
-                                  n_process=settings.modeling.spacy.number_of_process))
+        self.docs = list(self.nlp.pipe(self._df['CONTENT_EDITED'],
+                                       n_process=settings.modeling.spacy.number_of_process))
 
     def _get_avg_vector(self, ):
         """

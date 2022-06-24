@@ -25,13 +25,13 @@ class ExtraTreesModel:
         best_estimator, best_params = self.hyperparameter_search(dataset_dict=self.avg_dict)
         return self.test_best_model(best_estimator=best_estimator,
                                     dataset_dict=self.avg_dict,
-                                    confusion_matrix_filename=f'extra_trees_classifier_avg_vector')
+                                    confusion_matrix_filename=f'extra_trees_classifier_avg_vector'), best_estimator, best_params
 
     def find_best_hyperparameters_avg_tfidf(self):
         best_estimator, best_params = self.hyperparameter_search(dataset_dict=self.avg_tf_idf_dict)
         return self.test_best_model(best_estimator=best_estimator,
                                     dataset_dict=self.avg_tf_idf_dict,
-                                    confusion_matrix_filename=f'extra_trees_classifier_avg_vector_tfidf')
+                                    confusion_matrix_filename=f'extra_trees_classifier_avg_vector_tfidf'), best_estimator, best_params
 
     @staticmethod
     def hyperparameter_search(dataset_dict: dict):
