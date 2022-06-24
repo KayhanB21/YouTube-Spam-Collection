@@ -6,7 +6,7 @@
 # Required libraries
 from dynaconf import Dynaconf, Validator
 
-print("Notebook is started.")
+print("App is started.")
 settings = Dynaconf(settings_files=["config/default_settings.yml",  # a file for default settings
                                     "config/settings.yml",  # a file for main settings
                                     "config/.secrets.yml"  # a file for sensitive data (gitignored)

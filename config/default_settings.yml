@@ -13,3 +13,15 @@ DEFAULT:
                  'Youtube05-Shakira.csv',
     ]
     DEDUPLICATION_COLUMNS: ['COMMENT_ID']
+
+  PREPROCESSING:
+    STRIP_TEXT:
+      ENABLED: true
+    FLAG_YOUTUBE:
+      ENABLED: true
+    FLAG_URL:
+      ENABLED: true
+    LOWER_CASE:
+      ENABLED: true
+    REPLACE_EMOJI:
+      ENABLED: true

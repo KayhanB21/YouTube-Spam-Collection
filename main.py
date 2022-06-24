@@ -17,4 +17,6 @@ if __name__ == "__main__":
     hp.null_val_summary(df=df)
     hp.unique_col_percent(df=df)
     df = preprocessing.deduplication(df=df)
+    pipe = preprocessing.NLPPipeline(df=df)
+    pipe.run()
     logger.info("main function is done.")
