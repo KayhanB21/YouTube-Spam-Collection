@@ -13,6 +13,7 @@ DEFAULT:
                  'Youtube05-Shakira.csv',
     ]
 
+  RANDOM_STATE: 42 # set it to zero to disable it
 
   PREPROCESSING: # change enabled to true and false to disable the component
     DEDUPLICATION_COLUMNS: [ 'COMMENT_ID' ]
@@ -25,7 +26,7 @@ DEFAULT:
     LOWER_CASE:
       ENABLED: true
     REPLACE_EMOJI:
-      ENABLED: true
+      ENABLED: false
     REMOVE_SPECIAL_CHARACTERS:
       ENABLED: true
     REMOVE_NUMBERS:
@@ -36,4 +37,17 @@ DEFAULT:
       ENABLED: true
     LEMMATIZATION:
       ENABLED: true
+      SPACY_MODEL: en_core_web_md
       NUMBER_OF_PROCESS: 1
+
+  MODELING:
+    SPACY:
+      MODEL: en_core_web_md
+      NUMBER_OF_PROCESS: 1
+    TF_IDF:
+      MAX_DF: 0.65
+      MIN_DF: 1
+    SPLIT: # sum of the following numbers should be one
+      TRAIN: 0.92
+      VAL: 0.04
+      TEST: 0.04

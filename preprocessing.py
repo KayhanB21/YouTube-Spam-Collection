@@ -3,40 +3,37 @@ import re
 from emot.emo_unicode import UNICODE_EMOJI_ALIAS, EMOTICONS_EMO
 import spacy
 from tqdm import tqdm
+from pandarallel import pandarallel
 
 import helpers.pandas_h as hp
 from config import settings
 from logger import get_logger
 
 logger = get_logger(__name__)
-
-
-def deduplication(df: pd.DataFrame) -> pd.DataFrame:
-    if len(settings.preprocessing.deduplication_columns) > 0:
-        logger.info(f"executing deduplication for columns: {settings.preprocessing.deduplication_columns}")
-        df = df.drop_duplicates(subset=settings.preprocessing.deduplication_columns)
-        hp.unique_col_percent(df=df)
-    return df
+pandarallel.initialize(progress_bar=True)
 
 
 class NLPPipeline:
     def __init__(self, df: pd.DataFrame):
         """
         Class that take care of content column and make sure the noise is being removed
-        :param df:
+        :param df: main dataframe from reading csv
         :type df:
         """
         self.df = df
         self.df['CONTENT_EDITED'] = self.df['CONTENT']
 
+        # find YouTube link
         self.reg_flag_youtube = re.compile(
             r"youtu(?:.*\/v\/|.*v\=|\.be\/)([A-Za-z0-9_\-]{11})|watch\?v=([A-Za-z0-9_\-]{11})",
             re.IGNORECASE)
 
+        # find url
         self.reg_flag_url = re.compile(
             "(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$",
             re.IGNORECASE)
 
+        # emoji
         emoticons = {k: v.replace(":", "").replace("_", " ").replace(",", "").strip() for k, v in
                      EMOTICONS_EMO.items()}
         unicode_emoji = {k: v.replace(":", "").replace("_", " ").replace(",", "").strip() for k, v in
@@ -50,10 +47,12 @@ class NLPPipeline:
         for emoj, emot_txt in unicode_emoji.items():
             self.unicode_emoji.append((re.escape(emoj), emot_txt))
 
-        self.nlp = spacy.load("en_core_web_md", disable=['parser', 'ner'])
+        # lemmatization
+        self.nlp = spacy.load(settings.preprocessing.lemmatization.spacy_model, disable=['parser', 'ner'])
+
         logger.info(f"loaded spacy pipes: {self.nlp.pipe_names}")
 
-    def run(self):
+    def run(self) -> pd.DataFrame:
         """
         main routine for processing content column
         :return:
@@ -90,7 +89,9 @@ class NLPPipeline:
         if settings.preprocessing.lemmatization.enabled:
             logger.info("lemmatization is stared.")
             self.lemmatization()
+
         logger.info("word processing is finished.")
+        return self.df
 
     def strip_text(self):
         """
@@ -98,7 +99,7 @@ class NLPPipeline:
         :return: None
         :rtype: None
         """
-        self.df['CONTENT'] = self.df['CONTENT_EDITED'].str.strip()
+        self.df['CONTENT_EDITED'] = self.df['CONTENT_EDITED'].str.strip()
 
     def flag_youtube(self):
         """
@@ -115,7 +116,7 @@ class NLPPipeline:
         :return: None
         :rtype: None
         """
-        self.df['IS_YOUTUBE'] = self.df['CONTENT_EDITED'].apply(
+        self.df['IS_URL'] = self.df['CONTENT_EDITED'].apply(
             lambda x: True if self.reg_flag_url.search(x) else False)
 
     def lower_case(self):
@@ -158,7 +159,7 @@ class NLPPipeline:
                 logger.debug(f"{cnt1}, {cnt2}")
             return text
 
-        self.df['CONTENT_EDITED'] = self.df['CONTENT_EDITED'].apply(lambda x: convert_emoji(x))
+        self.df['CONTENT_EDITED'] = self.df['CONTENT_EDITED'].parallel_apply(lambda x: convert_emoji(x))
 
     def remove_special_characters(self):
         """
@@ -227,3 +228,33 @@ class NLPPipeline:
             res.append(" ".join(token.lemma_ for token in doc if (not token.is_stop) and token.has_vector))
         for inx, item in enumerate(tqdm(unique_desc)):
             self.df.loc[self.df[self.df['CONTENT_EDITED'] == item].index, 'CONTENT_EDITED'] = res[inx]
+
+
+def deduplication(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    remove duplicated rows (as it was discovered in exploration phase)
+    :param df:
+    :type df:
+    :return:
+    :rtype:
+    """
+    if len(settings.preprocessing.deduplication_columns) > 0:
+        logger.info(f"executing deduplication for columns: {settings.preprocessing.deduplication_columns}")
+        df = df.drop_duplicates(subset=settings.preprocessing.deduplication_columns)
+        hp.unique_col_percent(df=df)
+    return df
+
+
+def calc_author_spam_probability(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    calculate the probability of author being spam based on the historic data
+    :param df:
+    :type df:
+    :return:
+    :rtype:
+    """
+    res = df[df['CLASS'] == 1].groupby('AUTHOR').size() / df.groupby('AUTHOR').size()
+    res = res.fillna(0)
+    for inx, item in tqdm(res.iteritems()):
+        df.loc[df[df['AUTHOR'] == inx].index, 'AUTHOR_SPAM_PROB'] = item
+    return df
