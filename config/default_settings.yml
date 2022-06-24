@@ -1,0 +1,15 @@
+DEFAULT:
+
+  LOG_SETTING:
+    LEVEL: info
+    FORMAT: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    DATE_FORMAT: '%Y-%m-%d %H:%M:%S %z'
+
+  DATASET:
+    CSV_FILES: [ 'Youtube01-Psy.csv',
+                 'Youtube02-KatyPerry.csv',
+                 'Youtube03-LMFAO.csv',
+                 'Youtube04-Eminem.csv',
+                 'Youtube05-Shakira.csv',
+    ]
+    DEDUPLICATION_COLUMNS: ['COMMENT_ID']
