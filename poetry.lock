@@ -2,7 +2,7 @@
 name = "appnope"
 version = "0.1.3"
 description = "Disable App Nap on macOS >= 10.9"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -41,7 +41,7 @@ tests = ["pytest"]
 name = "asttokens"
 version = "2.0.5"
 description = "Annotate AST trees with source code positions"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -77,7 +77,7 @@ tests_no_zope = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>
 name = "backcall"
 version = "0.2.0"
 description = "Specifications for callback functions passed in to an API"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -208,7 +208,7 @@ python-versions = ">=3.7"
 name = "decorator"
 version = "5.1.1"
 description = "Decorators for Humans"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.5"
 
@@ -269,7 +269,7 @@ python-versions = ">=3.6"
 name = "executing"
 version = "0.8.3"
 description = "Get the currently executing AST node of a frame, and other information"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -350,7 +350,7 @@ test = ["flaky", "ipyparallel", "pre-commit", "pytest-cov", "pytest-timeout", "p
 name = "ipython"
 version = "8.4.0"
 description = "IPython: Productive Interactive Computing"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.8"
 
@@ -412,7 +412,7 @@ test = ["pytest (>=3.6.0)", "pytest-cov", "mock"]
 name = "jedi"
 version = "0.18.1"
 description = "An autocompletion tool for Python that can be used for text editors."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -597,7 +597,7 @@ setuptools_scm = ">=4"
 name = "matplotlib-inline"
 version = "0.1.3"
 description = "Inline Matplotlib backend for Jupyter"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.5"
 
@@ -794,7 +794,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 name = "parso"
 version = "0.8.3"
 description = "A Python Parser"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -824,7 +824,7 @@ test = ["pytest", "pytest-coverage", "mock", "typer-cli"]
 name = "pexpect"
 version = "4.8.0"
 description = "Pexpect allows easy control of interactive console applications."
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -835,7 +835,7 @@ ptyprocess = ">=0.5"
 name = "pickleshare"
 version = "0.7.5"
 description = "Tiny 'shelve'-like database with concurrency support"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -890,7 +890,7 @@ twisted = ["twisted"]
 name = "prompt-toolkit"
 version = "3.0.29"
 description = "Library for building powerful interactive command lines in Python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6.2"
 
@@ -912,7 +912,7 @@ test = ["ipaddress", "mock", "enum34", "pywin32", "wmi"]
 name = "ptyprocess"
 version = "0.7.0"
 description = "Run a subprocess in a pseudo terminal"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -920,7 +920,7 @@ python-versions = "*"
 name = "pure-eval"
 version = "0.2.2"
 description = "Safely evaluate AST nodes without side effects"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -973,7 +973,7 @@ email = ["email-validator (>=1.0.3)"]
 name = "pygments"
 version = "2.12.0"
 description = "Pygments is a syntax highlighting package written in Python."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -1298,7 +1298,7 @@ catalogue = ">=2.0.3,<2.1.0"
 name = "stack-data"
 version = "0.3.0"
 description = "Extract data from python stack frames and tracebacks for informative displays"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -1436,7 +1436,7 @@ telegram = ["requests"]
 name = "traitlets"
 version = "5.3.0"
 description = ""
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 
@@ -1493,7 +1493,7 @@ python-versions = "*"
 name = "wcwidth"
 version = "0.2.5"
 description = "Measures the displayed width of unicode strings in a terminal"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -1519,7 +1519,7 @@ notebook = ">=4.4.1"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.9,<3.11"
-content-hash = "56da4076a8f746ed11ce824abbb7474e2e63b27baaf437da36bef46cea8cc5e3"
+content-hash = "d9d5a16dbf6429521412a3c8c456bab683045d3bac2cd9a024e77b90f2a5511d"
 
 [metadata.files]
 appnope = [
