@@ -12,9 +12,10 @@ DEFAULT:
                  'Youtube04-Eminem.csv',
                  'Youtube05-Shakira.csv',
     ]
-    DEDUPLICATION_COLUMNS: ['COMMENT_ID']
 
-  PREPROCESSING:
+
+  PREPROCESSING: # change enabled to true and false to disable the component
+    DEDUPLICATION_COLUMNS: [ 'COMMENT_ID' ]
     STRIP_TEXT:
       ENABLED: true
     FLAG_YOUTUBE:
@@ -25,3 +26,14 @@ DEFAULT:
       ENABLED: true
     REPLACE_EMOJI:
       ENABLED: true
+    REMOVE_SPECIAL_CHARACTERS:
+      ENABLED: true
+    REMOVE_NUMBERS:
+      ENABLED: true
+    REMOVE_SHORT_WORD:
+      ENABLED: true
+    REMOVE_EXTRA_WHITE_SPACE:
+      ENABLED: true
+    LEMMATIZATION:
+      ENABLED: true
+      NUMBER_OF_PROCESS: 1
