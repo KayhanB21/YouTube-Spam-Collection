@@ -4,13 +4,16 @@ from emot.emo_unicode import UNICODE_EMOJI_ALIAS, EMOTICONS_EMO
 import spacy
 from tqdm import tqdm
 from pandarallel import pandarallel
+import psutil
 
 import helpers.pandas_h as hp
 from config import settings
 from logger import get_logger
 
 logger = get_logger(__name__)
-pandarallel.initialize(progress_bar=True)
+if not settings.preprocessing.replace_emoji.number_of_process:
+    settings.preprocessing.replace_emoji.number_of_process = psutil.cpu_count(logical=False)
+pandarallel.initialize(progress_bar=True, nb_workers=settings.preprocessing.replace_emoji.number_of_process)
 
 
 class NLPPipeline:
@@ -159,7 +162,7 @@ class NLPPipeline:
                 logger.debug(f"{cnt1}, {cnt2}")
             return text
 
-        self.df['CONTENT_EDITED'] = self.df['CONTENT_EDITED'].parallel_apply(lambda x: convert_emoji(x))
+        self.df['CONTENT_EDITED'] = self.df['CONTENT_EDITED'].parallel_apply(convert_emoji, )
 
     def remove_special_characters(self):
         """
@@ -228,6 +231,7 @@ class NLPPipeline:
             res.append(" ".join(token.lemma_ for token in doc if (not token.is_stop) and token.has_vector))
         for inx, item in enumerate(tqdm(unique_desc)):
             self.df.loc[self.df[self.df['CONTENT_EDITED'] == item].index, 'CONTENT_EDITED'] = res[inx]
+
 
 
 def deduplication(df: pd.DataFrame) -> pd.DataFrame:

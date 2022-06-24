@@ -7,6 +7,11 @@ logger = get_logger(__name__)
 
 
 def read_dataset() -> pd.DataFrame:
+    """
+    read files based on the provided config
+    :return:
+    :rtype:
+    """
     df = pd.DataFrame()
     for file_name in settings.dataset.csv_files:
         logger.info(f"start reading {file_name}")
@@ -16,4 +21,6 @@ def read_dataset() -> pd.DataFrame:
         logger.info(f"reading {file_name} is finished, "
                     f"number of new records: {len(df_temp.index)}, "
                     f"number of total records: {len(df.index)}")
+    df['CONTENT'] = df['CONTENT'].apply(lambda x: x.replace("\ufeff", ""))
+    df = df.reset_index(drop=True)
     return df

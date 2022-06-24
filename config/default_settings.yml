@@ -26,7 +26,8 @@ DEFAULT:
     LOWER_CASE:
       ENABLED: true
     REPLACE_EMOJI:
-      ENABLED: false
+      ENABLED: true
+      NUMBER_OF_PROCESS: 0 # set zero to use all the cores
     REMOVE_SPECIAL_CHARACTERS:
       ENABLED: true
     REMOVE_NUMBERS:
@@ -45,9 +46,15 @@ DEFAULT:
       MODEL: en_core_web_md
       NUMBER_OF_PROCESS: 1
     TF_IDF:
-      MAX_DF: 0.65
+      MAX_DF: 1
       MIN_DF: 1
     SPLIT: # sum of the following numbers should be one
-      TRAIN: 0.92
-      VAL: 0.04
-      TEST: 0.04
+      TRAIN: 0.94
+      VAL: 0.03
+      TEST: 0.03
+    EXTRA_TREES_CLASSIFIERS:
+      N_ESTIMATORS: [ 10, 20, 50, 100, 200, 500, 750 ]
+      COUNT_DEMO_FALSE_PREDICTION: 2
+    LOGISTIC_REGRESSION:
+      MAX_ITER: [ 300, 750, 1000 ]
+      COUNT_DEMO_FALSE_PREDICTION: 2
