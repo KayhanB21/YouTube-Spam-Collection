@@ -143,6 +143,7 @@ to achieve the results prepared here, three explanatory phase was conducted.
 
 # TODO
 
+- add unittests to underlying functions.
 - using is_youtube and is_url feature generated during the preprocessing step alongside distilled comments vectors.
 - using author historical spam probability and is_url feature generated during the preprocessing step.
 - using neural-net to reduce the dimensionally of word embedding and then use the aforementioned features to achieve
