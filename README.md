@@ -152,4 +152,4 @@ to achieve the results prepared here, three explanatory phase was conducted.
 - use larger language model, currently we are using 'en_core_web_md'
 - data interfaces in different classes can be centralized as a dataclass instead of dictionary to improved readability
   and code completion.
-- save model and it's configuration for future use.
+- save model and its configuration for future use.
