@@ -13,7 +13,7 @@ https://archive.ics.uci.edu/ml/datasets/YouTube+Spam+Collection
 To create virtual env using requirement.txt:
 
 ```
-pip install -r requirement.txt
+pip install -r requirements.txt
 ```
 
 or To create virtual env using poetry:
