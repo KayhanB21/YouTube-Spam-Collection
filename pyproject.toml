@@ -14,7 +14,7 @@ scikit-learn = "^1.1.1"
 dynaconf = "^3.1.9"
 pandarallel = "^1.6.1"
 torch = "^1.11.0"
-ipython = "^8.4.0"
+ipython = "^8.10.0"
 matplotlib = "^3.5.2"
 
 [tool.poetry.dev-dependencies]
